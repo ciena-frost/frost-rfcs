@@ -1,5 +1,3 @@
-Proposal for the explicit / customizable base form of the LTS object browser
-
 ```hbs
 {{frost-object-browser
   items=<sorted-filtered-selected-expanded-items>
@@ -55,5 +53,3 @@ Proposal for the explicit / customizable base form of the LTS object browser
   )
 )
 ```    
-     
-Data driven mixin/config version coming next
