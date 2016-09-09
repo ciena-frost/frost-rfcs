@@ -1,33 +1,29 @@
 export default {
   additionalProperties: false,
   definitions: {
-    actionItemDisabled: {
-      description: 'Tells if action bar button or link is disabled or ties it to selection',
-      oneOf: [
-        {
-          type: 'boolean',
-          default: false,
-        }, {
-          type: 'object',
-          additionalProperties: false,
-          description: 'Shortcut to enable and disable button or link as selection changes',
-          properties: {
-            minSelected: {type: 'number'},
-            maxSelected: {type: 'number'}
-          }
-        }
-      ]
-    },
     actionItem: {
       type: 'object',
       properties: {
-        id: {
+        actionName: {
           type: 'string',
-          description: 'Given to action handler to identify button or link'
+          description: 'Name of action that fires when button or link is pressed'
+        },
+        route: {
+          type: 'string',
+          description: 'Target for link'
         },
         text: {
           type: 'string',
           description: 'The text displayed on button or link'
+        },
+        icon: {
+          type: 'object',
+          description: 'Icon if present',
+          properties: {
+            name: {'string'},
+            pack: {'string'}
+          },
+          required: ['name']
         },
         size: {
           type: 'string',
@@ -41,8 +37,11 @@ export default {
           enum: ['primary', 'secondary', 'tertiary'],
           default: 'primary'
         },
-        disabled: {
-          '$ref': '#/definitions/actionItemDisabled'
+        enabled: {
+          type: 'string',
+          description: 'Tells if button or link is enabled based on number of items selected',
+          enum: ['single', 'multi', 'always', 'never'],
+          default: 'single'
         }
       }
     }
@@ -63,33 +62,31 @@ export default {
       default: false,
       description: 'Is list expandable?'
     },
-    isExpanded: {
-      type: 'boolean',
-      default: false,
-      description: 'Is list currently expanded'
+    expandedBunsenModel: {
+      type: 'object',
+      description: 'Bunsen model for expanded list items'
+    },
+    expandedBunsenView: {
+      ref: 'https://github.com/ciena-blueplanet/bunsen-core/blob/master/src/validator/view-schemas/v2.js',
+      description: 'Bunsen view for expanded list items'
     },
     rowHeight: {
       type: 'number',
       description: 'Row height given to frost-list. Default is frost-list default.'
     },
-    expandedRowHeight: {
-      type: 'number',
-      description: 'Row height given to frost-list when expanded. Default is the normal rowHeight.'
-    },
     pageSize: {
       type: 'number',
-      default: 20,
+      default: 100,
       description: 'Number of items fetched at a time'
     },
-    initialPages: {
-      type: 'number',
-      default: 3,
-      description: 'Number of pages to load initially'
-    },
     maxPages: {
-      type: 'number',
-      default: 3,
-      description: 'Number of pages to retain and keep updated. Set to 0 to to keep everything.'
+      description: 'Number of pages to retain and keep updated. Null or omitted to keep everything',
+      oneOf: [{
+        type: 'number',
+      }, {
+        type: 'Null',
+      }],
+      default: null
     },
     filterBunsenModel: {
       type: 'object',
@@ -118,37 +115,11 @@ export default {
         required: ['name']
       }
     },
-    currentSort: {
-      type: 'array',
-      description: 'Current sorting methods',
-      items: {
-        type: 'object',
-        additionalProperties: false,
-        properties: {
-          name: {
-            type: 'string',
-            description: 'Must match one of the names in the sorting list'
-          },
-          descending: {
-            type: 'boolean',
-            default: true
-          }
-        },
-        required: ['name']
-      }
-    },
     selectionType: {
       type: 'string',
       description: 'Controls what type of selection is available',
       enum: ['single', 'multi', 'none'],
       default: 'multi'
-    },
-    selectedItems: {
-      type: 'array',
-      description: 'List of currently selected items',
-      items: {
-        description: 'Type should match the item id. Probably string.'
-      }
     },
     actionBarButtons: {
       type: 'array',
@@ -192,8 +163,5 @@ export default {
         }
       }
     }
-  },
-  required: [
-    'bunsenModel'
-  ]
+  }
 }
