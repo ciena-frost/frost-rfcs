@@ -1,5 +1,5 @@
 export default {
-  bunsenModel: {
+  listBunsenModel: {
     type: 'object',
     properties: {
       username: {
@@ -13,7 +13,7 @@ export default {
       }
     }
   },
-  bunsenView: {
+  listBunsenView: {
     version: '2.0',
     type: 'form',
     cells: [{
@@ -68,13 +68,19 @@ export default {
     priority: 'tertiary',
     enabled: 'multi'
   }],
+  actionBarLinks: [{
+    text: 'Go elsewhere',
+    route: 'elsewhere',
+    enabled: 'single'
+  }],
   infoBar: {
     icon: {
       name: 'user-account',
       pack: 'uac-icon-pack'
     },
     title: 'User Accounts',
-    actionItems: [{
+    subTitle: 'List of users',
+    actionButtons: [{
       actionName: 'onCreate',
       icon: {
         name: 'create'

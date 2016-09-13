@@ -49,11 +49,11 @@ export default {
   type: 'object',
   description: 'Object browser configuration schema',
   properties: {
-    bunsenModel: {
+    listBunsenModel: {
       type: 'object',
       description: 'Bunsen model for list items'
     },
-    bunsenView: {
+    listBunsenView: {
       ref: 'https://github.com/ciena-blueplanet/bunsen-core/blob/master/src/validator/view-schemas/v2.js',
       description: 'Bunsen view for list items'
     },
@@ -62,11 +62,11 @@ export default {
       default: false,
       description: 'Is list expandable?'
     },
-    expandedBunsenModel: {
+    expandedListBunsenModel: {
       type: 'object',
       description: 'Bunsen model for expanded list items'
     },
-    expandedBunsenView: {
+    expandedListBunsenView: {
       ref: 'https://github.com/ciena-blueplanet/bunsen-core/blob/master/src/validator/view-schemas/v2.js',
       description: 'Bunsen view for expanded list items'
     },
