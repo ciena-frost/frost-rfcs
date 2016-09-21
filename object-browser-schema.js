@@ -25,23 +25,17 @@ export default {
           },
           required: ['name']
         },
-        size: {
-          type: 'string',
-          description: 'Size of button or link',
-          enum: ['small', 'medium', 'large'],
-          default: 'small'
-        },
         priority: {
           type: 'string',
           description: 'Priority of button or link',
           enum: ['primary', 'secondary', 'tertiary'],
-          default: 'primary'
+          default: 'secondary'
         },
         enabled: {
           type: 'string',
           description: 'Tells if button or link is enabled based on number of items selected',
-          enum: ['single', 'multi', 'always', 'never'],
-          default: 'single'
+          enum: ['single', 'multi', 'always'],
+          default: 'always'
         }
       }
     }
@@ -56,15 +50,6 @@ export default {
     listBunsenView: {
       ref: 'https://github.com/ciena-blueplanet/bunsen-core/blob/master/src/validator/view-schemas/v2.js',
       description: 'Bunsen view for list items'
-    },
-    expandable: {
-      type: 'boolean',
-      default: false,
-      description: 'Is list expandable?'
-    },
-    expandedListBunsenModel: {
-      type: 'object',
-      description: 'Bunsen model for expanded list items'
     },
     expandedListBunsenView: {
       ref: 'https://github.com/ciena-blueplanet/bunsen-core/blob/master/src/validator/view-schemas/v2.js',
@@ -101,15 +86,27 @@ export default {
       description: 'Available sort methods',
       items: {
         type: 'object',
-        additionalProperties: false,
         properties: {
           name: {
             type: 'string',
-            description: 'Used both for display and configuration'
+            description: 'Name to display in UI'
+          },
+          type: {
+            type: 'string',
+            description: 'Describes sort type to adapter'
+          },
+          attrib: {
+            oneOf: [{
+              type: 'string',
+              description: 'Describes sort attribute to adapter'
+            }, {
+              type: 'object'
+            }]
           },
           defaultDescending: {
             type: 'boolean',
             description: 'When selected the sort polarity will be changed to ascending or descending. Omit for normal behavior where ascending or descending state is retained.',
+            default: false
           }
         },
         required: ['name']
@@ -121,16 +118,9 @@ export default {
       enum: ['single', 'multi', 'none'],
       default: 'multi'
     },
-    actionBarButtons: {
+    actionBarControls: {
       type: 'array',
-      description: 'Buttons in the action bar',
-      items: {
-        '$ref': '#/definitions/actionItem'
-      }
-    },
-    actionBarLinks: {
-      type: 'array',
-      description: 'Links in the action bar',
+      description: 'Buttons and links in the action bar',
       items: {
         '$ref': '#/definitions/actionItem'
       }
@@ -154,14 +144,15 @@ export default {
         summary: {
           type: 'string'
         },
-        actionItems: {
+        controls: {
           type: 'array',
-          description: 'Buttons on the info bar. Typically a create button.',
+          description: 'Buttons and links on the info bar. Typically a create button.',
           items: {
             '$ref': '#/definitions/actionItem'
           }
         }
       }
-    }
+    },
+    required: ['bunsenModel', 'bunsenView']
   }
 }

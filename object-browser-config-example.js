@@ -88,5 +88,20 @@ export default {
       text: 'Create',
       enabled: 'always'
     }]
+  },
+  initialState: {
+    sort: [{
+      name: 'Username',
+      descending: false
+    }],
+    filter: {
+      firstName: 'steven'
+    },
+    expanded: false
+  },
+  dataAdapter: {
+    // Configure data adapter, probably by giving an endpoint or ember data model name
+    // Any other settings specific to the data model go here as well.
+    endpoint: 'users'
   }
 }
